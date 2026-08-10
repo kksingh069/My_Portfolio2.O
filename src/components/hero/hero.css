@@ -1,0 +1,299 @@
+/* ═══════════════════════════════════════
+   KKS Hero Section
+   ═══════════════════════════════════════ */
+
+.kks-hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #fff;
+}
+
+/* ── Content overlay (above Aurora canvas) ────────────────── */
+.kks-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 7.5rem 3rem 3rem;
+  pointer-events: none;
+}
+
+.kks-hero-overlay a,
+.kks-letter,
+.kks-hero-headline,
+.kks-word-mask,
+.kks-flip-char {
+  pointer-events: auto;
+}
+
+/* ── Headline wrapper (headline + rule grouped) ────────────── */
+.kks-hero-title-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── Headline block ────────────────────────────────────────── */
+.kks-hero-headline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  user-select: none;
+}
+
+/* One line of words (flex row, centered) */
+.kks-hl-line {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0.18em;
+  font-family: var(--font-aeonik), sans-serif;
+  font-weight: 600;
+  font-size: clamp(2.5rem, 5vw, 5.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+/* Rule: grows from center after words land */
+.kks-hl-rule {
+  width: 80%;
+  max-width: 900px;
+  height: 1px;
+  margin-top: 0.6rem;
+  transform-origin: center;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.22) 20%,
+    rgba(0, 0, 0, 0.38) 50%,
+    rgba(0, 0, 0, 0.22) 80%,
+    transparent 100%
+  );
+}
+
+/* ── Word-mask reveal (overflow:hidden + slide-up) ─────────── */
+/*
+ * Each word sits inside a clipping container.
+ * The motion.span inside starts at y:110% and rises to y:0.
+ * The 3° skewY that straightens on arrival adds organic weight.
+ */
+.kks-word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.05em; /* prevent bottom clip on descenders */
+  color: #000000 !important;
+  pointer-events: none;
+}
+
+.kks-word-inner {
+  display: inline-block;
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* ── Per-letter GSAP flip hover ────────────────────────────── */
+/*
+ * Each letter has two stacked copies inside overflow:hidden.
+ * On mouseenter/leave, GSAP slides both up/down via yPercent.
+ * kks-ft = visible top copy (default color)
+ * kks-fb = hidden bottom copy (hover color, starts below container)
+ * Set line-height to 1 to match the line alignment.
+ */
+.kks-flip-char {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  line-height: 1.0;
+  cursor: none;
+}
+
+/* Top copy — visible by default, exits up on hover */
+.kks-ft {
+  display: block;
+  will-change: transform;
+}
+
+/* Bottom copy — hidden below, rises in on hover */
+.kks-fb {
+  display: block;
+  will-change: transform;
+}
+
+/* Accent letter keeps its colour + underline on both copies */
+.kks-flip-char--accent .kks-ft,
+.kks-flip-char--accent .kks-fb {
+  text-decoration: underline;
+  text-underline-offset: 0.14em;
+  text-decoration-thickness: 0.06em;
+  text-decoration-color: currentColor;
+}
+
+/* ── Bottom info strip ─────────────────────────────────────── */
+.kks-hero-bottom {
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+.kks-hero-eyebrow {
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.kks-hero-desc {
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.6rem;
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+  color: rgba(0, 0, 0, 0.85);
+  max-width: 36rem;
+  pointer-events: none;
+}
+
+.kks-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 2rem;
+  padding: 0.65rem 1.4rem;
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.9);
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: 9px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.8) 0%, rgba(200, 200, 200, 0.25) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 4px 24px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: auto;
+}
+
+.kks-hero-cta:hover {
+  border-color: rgba(0, 0, 0, 0.4);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.9) 0%, rgba(200, 200, 200, 0.4) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 6px 32px rgba(0, 0, 0, 0.12);
+  color: #000;
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .kks-hl-line {
+    font-size: clamp(2rem, 7vw, 3.8rem);
+  }
+  .kks-hero-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .kks-hero-overlay {
+    padding: 6rem 1.5rem 2.5rem;
+  }
+  .kks-hl-line {
+    white-space: normal;
+    text-align: center;
+    flex-wrap: wrap;
+  }
+}
+
+/* ═══════════════════════════════════════
+   Reusable tech-font utilities
+   ═══════════════════════════════════════ */
+
+.kks-tech-text {
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.kks-tech-label {
+  display: inline-block;
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.3rem 0.8rem;
+  white-space: nowrap;
+}
+
+.kks-tech-stat {
+  font-family: var(--font-space-mono), monospace;
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1;
+}
+
+/* Glass button styling matching user spec */
+.kks-glass-button {
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.45);
+  background: linear-gradient(
+    180deg, 
+    rgba(255, 255, 255, 0.35) 0%, 
+    rgba(255, 255, 255, 0.12) 65%
+  );
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 11px;
+  padding: 0.7rem 1.4rem;
+  box-shadow: 
+    rgba(0, 0, 0, 0.4) 0px 0.6px 1.1px -1.25px, 
+    rgba(0, 0, 0, 0.3) 0px 2.3px 4.1px -2.5px, 
+    rgba(0, 0, 0, 0.15) 0px 10px 18px -3.75px, 
+    rgba(255, 255, 255, 0.18) 0px 0.7px 0.7px -0.58px, 
+    rgba(255, 255, 255, 0.10) 0px 1.8px 1.8px -1.16px, 
+    rgba(255, 255, 255, 0.04) 0px 3.6px 3.6px -1.75px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.kks-glass-button:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+  background: linear-gradient(
+    180deg, 
+    rgba(255, 255, 255, 0.24) 0%, 
+    rgba(255, 255, 255, 0.06) 65%
+  );
+  transform: translateY(-1px);
+  box-shadow: 
+    rgba(0, 0, 0, 0.6) 0px 1px 2px -1.25px, 
+    rgba(0, 0, 0, 0.5) 0px 3.5px 6.5px -2.5px, 
+    rgba(0, 0, 0, 0.3) 0px 14px 24px -3.75px, 
+    rgba(255, 255, 255, 0.15) 0px 1px 1px -0.58px;
+}
+
+/* Glass menu-specific button: smaller padding and pill shape */
+.kks-glass-menu-btn {
+  border-radius: 9999px !important;
+  padding: 0.42rem 1.0rem !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+}

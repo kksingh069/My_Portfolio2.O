@@ -1,0 +1,268 @@
+/* ═══════════════════════════════════════════
+   KKS Menu Overlay — Custom Styles
+   ═══════════════════════════════════════════ */
+
+/* Fullscreen overlay */
+.kks-menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background-color: #f5f5f0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Menu content area */
+.kks-menu-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6rem 4rem 4rem;
+}
+
+/* Individual menu item row */
+.kks-menu-item {
+  position: relative;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.kks-menu-item:last-child {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* The label container */
+.kks-menu-label {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.8rem 0;
+  gap: 1.5rem;
+}
+
+/* Menu number (01, 02, 03) */
+.kks-menu-number {
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.35);
+  letter-spacing: 0.05em;
+  position: absolute;
+  left: 0;
+  top: 1.8rem;
+  transition: color 0.3s ease;
+}
+
+.kks-menu-item:hover .kks-menu-number {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Menu item text */
+.kks-menu-text {
+  font-family: var(--font-bebas-neue), sans-serif;
+  font-size: clamp(4rem, 8vw, 9rem);
+  font-weight: 400;
+  color: #0a0a0a;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 3;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.kks-menu-item:hover .kks-menu-text {
+  color: #ffffff;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* ═══════════════════════════════════════════
+   Marquee Strip — appears on hover behind text
+   ═══════════════════════════════════════════ */
+
+.kks-marquee-strip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.kks-marquee-track {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  will-change: transform;
+  animation: kks-marquee-scroll 26s linear infinite;
+}
+
+.kks-marquee-track.kks-marquee-reverse {
+  animation: kks-marquee-scroll-reverse 26s linear infinite;
+}
+
+/* Text segment */
+.kks-marquee-segment {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-bebas-neue), sans-serif;
+  font-size: clamp(3rem, 6.5vw, 8rem);
+  font-weight: 400;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.04em;
+  padding: 0 0.5rem;
+  line-height: 1;
+}
+
+/* Arrow circle inside segment */
+.kks-marquee-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  margin: 0 1rem;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.kks-marquee-dot svg {
+  display: block;
+  color: white;
+}
+
+/* Close button */
+.kks-menu-close {
+  position: fixed;
+  top: 1.8rem;
+  right: 2rem;
+  z-index: 60;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: #6b8f71;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
+}
+
+.kks-menu-close:hover {
+  transform: scale(1.1) rotate(90deg);
+  background: #5a7a60;
+}
+
+.kks-menu-close svg {
+  display: block;
+  color: white;
+}
+
+/* Footer area */
+.kks-menu-footer {
+  padding: 2rem 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.65rem;
+  color: rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.04em;
+  line-height: 1.7;
+}
+
+.kks-menu-footer a {
+  color: rgba(0, 0, 0, 0.55);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.kks-menu-footer a:hover {
+  color: #0a0a0a;
+}
+
+/* Header brand + menu trigger */
+.kks-brand-logo {
+  font-family: var(--font-bebas-neue), sans-serif;
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  letter-spacing: 0.15em;
+  /*
+   * Physical shadow cast downward, white so visible on dark bg.
+   * Mimics sunlight from above casting a glow on the floor below the text.
+   * Three graduated layers: strong near → medium spread → faint diffuse.
+   */
+  text-shadow:
+    0 6px 10px rgba(255, 255, 255, 0.28),
+    0 12px 28px rgba(255, 255, 255, 0.13),
+    0 22px 50px rgba(255, 255, 255, 0.06);
+}
+
+.kks-menu-trigger-label {
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  /* same white-floor-shadow system, scaled for smaller text */
+  text-shadow:
+    0 5px 8px rgba(255, 255, 255, 0.22),
+    0 10px 22px rgba(255, 255, 255, 0.1),
+    0 18px 40px rgba(255, 255, 255, 0.05);
+}
+
+.kks-header-dot {
+  opacity: 0.55; /* default dim — framer-motion overrides to 1 on hover */
+  /* white glow cast below each dot */
+  box-shadow:
+    0 3px 8px rgba(255, 255, 255, 0.18),
+    0 7px 18px rgba(255, 255, 255, 0.09);
+}
+
+/* ═══════════════════════════════════════════
+   Keyframes
+   ═══════════════════════════════════════════ */
+
+@keyframes kks-marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes kks-marquee-scroll-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* ═══════════════════════════════════════════
+   Responsive
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .kks-menu-content {
+    padding: 5rem 1.5rem 2rem;
+  }
+
+  .kks-menu-footer {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+  }
+
+  .kks-menu-close {
+    right: 1.5rem;
+  }
+
+  .kks-menu-number {
+    display: none;
+  }
+}

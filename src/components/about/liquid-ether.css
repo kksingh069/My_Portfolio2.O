@@ -1,0 +1,16 @@
+.kks-liquid-ether {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.kks-liquid-ether-canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  background: transparent;
+  cursor: none;
+}

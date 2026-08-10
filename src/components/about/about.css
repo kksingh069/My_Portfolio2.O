@@ -1,0 +1,88 @@
+/* ═══════════════════════════════════════
+   KKS About — Second Section
+   ═══════════════════════════════════════ */
+
+.kks-about-section {
+  position: relative;
+  width: 96%;           /* Gap on left and right */
+  margin: 0 auto;       /* Centered */
+  border-top-left-radius: 2rem;  /* Rounded card corners */
+  border-top-right-radius: 2rem;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.05); /* Subtle depth shadow */
+  min-height: 100vh;
+  background: #ffffff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Scroll-drawn SVG arc ─────────────── */
+.kks-about-arc {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: auto;
+  z-index: 1;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* ── Main content ─────────────────────── */
+.kks-about-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 8rem 3rem 6rem 4rem;
+  pointer-events: none; /* let fluid sim get mouse, but text stays readable */
+}
+
+/* ── Headline ─────────────────────────── */
+.kks-about-headline {
+  font-family: var(--font-aeonik), sans-serif;
+  font-weight: 500;
+  font-size: clamp(4rem, 7vw, 8.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  color: #0d0d0d;
+  user-select: none;
+}
+
+/* Each line clips its own overflow for the reveal */
+.kks-about-hl-line {
+  display: block;
+  overflow: hidden;
+}
+
+/* ── Description ──────────────────────── */
+.kks-about-desc {
+  font-family: var(--font-albert-sans), sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.38;
+  letter-spacing: 0.005em;
+  color: rgba(0, 0, 0, 0.5);
+  max-width: 30rem;
+  font-weight: 300;
+  margin-left: auto;
+  margin-top: 4.5rem;
+}
+
+/* ── Responsive ──────────────────────── */
+@media (max-width: 900px) {
+  .kks-about-headline {
+    font-size: clamp(3rem, 11vw, 6rem);
+  }
+  .kks-about-desc {
+    margin-left: 0;
+    margin-top: 3rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .kks-about-content {
+    padding: 6rem 1.5rem 4rem;
+  }
+  .kks-about-arc {
+    opacity: 0.4;
+  }
+}

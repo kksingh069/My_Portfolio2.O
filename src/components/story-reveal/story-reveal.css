@@ -1,0 +1,96 @@
+.kks-story-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: #fff;
+  color: #000;
+  overflow: hidden;
+}
+
+.kks-story-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Typography Elements ── */
+.kks-story-label-top,
+.kks-story-label-bottom {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  z-index: 5;
+  opacity: 0.6;
+}
+
+.kks-story-label-top {
+  top: 3rem;
+}
+
+.kks-story-label-bottom {
+  bottom: 3rem;
+}
+
+.kks-story-title-left,
+.kks-story-title-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-aeonik), sans-serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  z-index: 5;
+}
+
+.kks-story-title-left {
+  left: 4rem;
+}
+
+.kks-story-title-right {
+  right: 4rem;
+}
+
+/* ── Image Wrapper ── */
+.kks-story-image-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  /* GPU-accelerated clip-path for expanding reveal */
+  /* Starts as a perfectly scaled down rectangle (35% crop on all sides) */
+  /* Using a uniform percentage guarantees mathematically perfect center expansion */
+  clip-path: inset(35%);
+  will-change: clip-path;
+}
+
+.kks-story-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Slight scale down initially, expands as the clip-path expands */
+  transform: scale(1.1);
+  will-change: transform;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .kks-story-image-wrapper {
+    clip-path: inset(30%);
+  }
+  .kks-story-title-left {
+    left: 2rem;
+  }
+  .kks-story-title-right {
+    right: 2rem;
+  }
+}
