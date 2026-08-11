@@ -1,4 +1,4 @@
-import { inter, playfairDisplay, publicSans, bebasNeue, spaceMono, urbanist, archivoBlack, archivo, spaceGrotesk, albertSans } from "@/lib/fonts";
+import { inter, playfairDisplay, publicSans, bebasNeue, spaceMono, urbanist, archivoBlack, archivo, spaceGrotesk, albertSans, plusJakartaSans } from "@/lib/fonts";
 import "./globals.css";
 import "../components/menu/menu.css";
 import "../components/hero/hero.css";
@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${playfairDisplay.variable} ${publicSans.variable} ${bebasNeue.variable} ${spaceMono.variable} ${urbanist.variable} ${archivoBlack.variable} ${archivo.variable} ${spaceGrotesk.variable} ${albertSans.variable} h-full antialiased`}
+      className={`${inter.variable} ${playfairDisplay.variable} ${publicSans.variable} ${bebasNeue.variable} ${spaceMono.variable} ${urbanist.variable} ${archivoBlack.variable} ${archivo.variable} ${spaceGrotesk.variable} ${albertSans.variable} ${plusJakartaSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans cursor-none">
         <SmoothScroll />

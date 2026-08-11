@@ -17,8 +17,9 @@
   z-index: 2;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 7.5rem 3rem 3rem;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 7.5rem 3rem 3.5rem;
   pointer-events: none;
 }
 
@@ -34,14 +35,14 @@
 .kks-hero-title-wrap {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
 
 /* ── Headline block ────────────────────────────────────────── */
 .kks-hero-headline {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 0;
   user-select: none;
 }
@@ -49,24 +50,25 @@
 /* One line of words (flex row, centered) */
 .kks-hl-line {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: baseline;
   gap: 0.18em;
-  font-family: var(--font-aeonik), sans-serif;
-  font-weight: 600;
-  font-size: clamp(2.5rem, 5vw, 5.5rem);
-  line-height: 0.95;
-  letter-spacing: -0.02em;
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  font-weight: 800;
+  font-size: clamp(5.5rem, 13vw, 16rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
   white-space: nowrap;
+  color: #000000;
 }
 
 /* Rule: grows from center after words land */
 .kks-hl-rule {
-  width: 80%;
+  width: 100%;
   max-width: 900px;
   height: 1px;
   margin-top: 0.6rem;
-  transform-origin: center;
+  transform-origin: left;
   background: linear-gradient(
     to right,
     transparent 0%,
@@ -89,13 +91,13 @@
   vertical-align: top;
   padding-bottom: 0.05em; /* prevent bottom clip on descenders */
   color: #000000 !important;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .kks-word-inner {
   display: inline-block;
   will-change: transform;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 /* ── Per-letter GSAP flip hover ────────────────────────────── */
@@ -200,7 +202,7 @@
 /* ── Responsive ────────────────────────────────────────────── */
 @media (max-width: 900px) {
   .kks-hl-line {
-    font-size: clamp(2rem, 7vw, 3.8rem);
+    font-size: clamp(3.5rem, 12vw, 9rem);
   }
   .kks-hero-bottom {
     flex-direction: column;
