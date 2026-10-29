@@ -1,0 +1,132 @@
+/* ═══════════════════════════════════════
+   KKS — Global FX layer
+   (preloader · scroll HUD · dev grid · toast · cursor label)
+   ═══════════════════════════════════════ */
+
+/* ── Scroll HUD ────────────────────────── */
+.kks-hud {
+  position: fixed;
+  left: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 45;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.6rem;
+  mix-blend-mode: difference;
+  color: #fff;
+  pointer-events: none;
+}
+.kks-hud-track {
+  width: 1px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.25);
+  overflow: hidden;
+}
+.kks-hud-fill {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  transform: scaleY(0);
+  transform-origin: top;
+}
+.kks-hud-label {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums;
+}
+
+.kks-hud-section {
+  display: inline-block;
+  white-space: nowrap;
+  animation: kks-hud-roll 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes kks-hud-roll {
+  from { transform: translateY(100%); opacity: 0; filter: blur(3px); }
+  to   { transform: none; opacity: 1; filter: none; }
+}
+.kks-hud-label { overflow: hidden; }
+
+/* ── Dev grid easter egg ───────────────── */
+.kks-devgrid {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  pointer-events: none;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+  padding: 0 3rem;
+}
+.kks-devgrid-col {
+  position: relative;
+  background: rgba(43, 75, 255, 0.07);
+  border-left: 1px solid rgba(43, 75, 255, 0.35);
+  border-right: 1px solid rgba(43, 75, 255, 0.35);
+  transform-origin: top;
+}
+.kks-devgrid-col span {
+  position: absolute;
+  top: 6.5rem;
+  left: 6px;
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.55rem;
+  color: var(--kks-blue);
+}
+
+/* ── Toast ─────────────────────────────── */
+.kks-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 2rem;
+  translate: -50% 0;
+  z-index: 9001;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1.1rem;
+  border-radius: 999px;
+  background: var(--kks-ink);
+  color: var(--kks-paper);
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  white-space: nowrap;
+}
+.kks-toast-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--kks-blue-soft);
+  box-shadow: 0 0 10px var(--kks-blue-soft);
+}
+
+/* ── Cursor label (contextual cursor) ──── */
+.kks-cursor-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #000;
+  white-space: nowrap;
+}
+
+.kks-magnetic { display: inline-block; will-change: transform; }
+
+@media (max-width: 600px) {
+  .kks-hud { display: none; }
+  .kks-devgrid { grid-template-columns: repeat(4, 1fr); padding: 0 1rem; gap: 12px; }
+  .kks-devgrid-col:nth-child(n + 5) { display: none; }
+  .kks-toast { white-space: normal; width: calc(100% - 2rem); }
+}
+

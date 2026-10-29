@@ -1,0 +1,172 @@
+/* ═══════════════════════════════════════
+   KKS Process — pinned horizontal scroll
+   ═══════════════════════════════════════ */
+
+.kks-process-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: var(--kks-paper);
+  color: var(--kks-ink);
+  overflow: hidden;
+}
+
+.kks-process-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--kks-line-dark);
+  z-index: 3;
+}
+.kks-process-progress-fill {
+  height: 100%;
+  background: var(--kks-blue);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.kks-process-track {
+  display: flex;
+  height: 100%;
+  width: max-content;
+  will-change: transform;
+}
+
+.kks-process-intro {
+  width: 48vw;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 0 4vw 0 3rem;
+}
+.kks-process-intro .kks-eyebrow { color: rgba(10, 10, 10, 0.55); }
+
+.kks-process-title {
+  margin: 0;
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  font-weight: 700;
+  font-size: clamp(3rem, 6vw, 6.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+}
+.kks-process-title em {
+  font-family: var(--font-playfair-display), serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--kks-blue);
+}
+
+.kks-process-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0;
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.5);
+}
+.kks-process-arrow {
+  display: inline-grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  border: 1px solid rgba(10, 10, 10, 0.25);
+  font-size: 0.9rem;
+  animation: kks-nudge 1.6s ease-in-out infinite;
+}
+@keyframes kks-nudge { 50% { transform: translateX(6px); } }
+
+/* ── Panels ───────────────────────────── */
+.kks-process-panel {
+  position: relative;
+  width: 52vw;
+  flex-shrink: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 5vw;
+  border-left: 1px solid var(--kks-line-dark);
+  overflow: hidden;
+}
+.kks-process-panel:nth-child(odd) { background: var(--kks-paper-2); }
+
+.kks-pp-no {
+  position: absolute;
+  right: -4vw;
+  bottom: -6vh;
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  font-weight: 800;
+  font-size: clamp(16rem, 30vw, 30rem);
+  line-height: 0.8;
+  letter-spacing: -0.08em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(10, 10, 10, 0.12);
+  pointer-events: none;
+  user-select: none;
+}
+
+.kks-pp-body {
+  position: relative;
+  z-index: 1;
+  max-width: 30rem;
+}
+.kks-pp-tag {
+  display: inline-block;
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.7rem;
+  background: var(--kks-ink);
+  color: var(--kks-paper);
+}
+.kks-pp-title {
+  margin: 1.4rem 0 1.2rem;
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  font-weight: 800;
+  font-size: clamp(3rem, 5.4vw, 6rem);
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+}
+.kks-pp-text {
+  margin: 0 0 2rem;
+  font-family: var(--font-albert-sans), sans-serif;
+  font-weight: 300;
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: rgba(10, 10, 10, 0.65);
+}
+.kks-pp-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--kks-line-dark);
+}
+.kks-pp-list li {
+  display: flex;
+  gap: 0.8rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--kks-line-dark);
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.kks-pp-list li span { color: var(--kks-blue); }
+
+/* ── Tablet / mobile: vertical stack ─── */
+@media (max-width: 900px) {
+  .kks-process-section { height: auto; }
+  .kks-process-progress { display: none; }
+  .kks-process-track { flex-direction: column; width: 100%; }
+  .kks-process-intro { width: 100%; padding: 8rem 1.5rem 4rem; }
+  .kks-process-panel { width: 100%; padding: 5rem 1.5rem; border-left: none; border-top: 1px solid var(--kks-line-dark); }
+  .kks-pp-no { font-size: 14rem; right: -1rem; bottom: -2rem; }
+}

@@ -6,7 +6,10 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 export default function Cursor() {
   const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  const [hoverType, setHoverType] = useState("normal"); // "menu", "logo", "text", "normal"
+  const [hoverType, setHoverType] = useState("normal"); // "label", "menu", "logo", "text", "normal"
+  const [label, setLabel] = useState("");
+  const [enabled, setEnabled] = useState(true);
+  const [inTrail, setInTrail] = useState(false); // footer swaps in its own card-trail cursor
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
@@ -16,6 +19,11 @@ export default function Cursor() {
   const smoothY = useSpring(cursorY, springConfig);
 
   useEffect(() => {
+    // No custom cursor on touch devices
+    if (window.matchMedia("(pointer: coarse)").matches) {
+      setEnabled(false);
+      return;
+    }
     const moveCursor = (e) => {
       cursorX.set(e.clientX - 20);
       cursorY.set(e.clientY - 20);
@@ -24,7 +32,22 @@ export default function Cursor() {
 
     const handleMouseOver = (e) => {
       const target = e.target;
+      if (!(target instanceof Element)) return;
       const tag = target.tagName.toLowerCase();
+
+      // Footer has its own cursor (FooterTrail) — step aside there,
+      // except over the link columns / bottom bar.
+      setInTrail(!!target.closest("[data-trail-zone]") && !target.closest("[data-trail-off]"));
+
+      // Contextual cursor: any element with data-cursor="View" shows that word
+      const labelled = target.closest("[data-cursor]");
+      if (labelled) {
+        setLabel(labelled.getAttribute("data-cursor") || "");
+        setIsHovering(true);
+        setHoverType("label");
+        return;
+      }
+      setLabel("");
       
       const isMenuTrigger = target.closest(".kks-menu-trigger-label") || target.closest(".grid-cols-2") || target.closest("[aria-label='Close menu']") || target.closest(".kks-menu-close");
       const isLogo = target.classList.contains("font-heading") && target.innerText === "KKS";
@@ -68,6 +91,8 @@ export default function Cursor() {
   // Dynamic animations depending on target hover type
   const getOuterLayout = () => {
     switch (hoverType) {
+      case "label":
+        return { width: 92, height: 92, marginLeft: -26, marginTop: -26 };
       case "menu":
         return { width: 64, height: 64, marginLeft: -12, marginTop: -12 };
       case "logo":
@@ -83,6 +108,13 @@ export default function Cursor() {
 
   const getInnerLayout = () => {
     switch (hoverType) {
+      case "label":
+        return {
+          width: 92,
+          height: 92,
+          borderRadius: "50%",
+          boxShadow: "0 0 40px 10px rgba(255, 255, 255, 0.25)",
+        };
       case "menu":
         return {
           width: 64,
@@ -111,13 +143,15 @@ export default function Cursor() {
     }
   };
 
+  if (!enabled) return null;
+
   return (
     <motion.div
       className="pointer-events-none fixed left-0 top-0 z-[9999] mix-blend-difference"
       style={{
         x: smoothX,
         y: smoothY,
-        opacity: isVisible ? 1 : 0,
+        opacity: isVisible && !inTrail ? 1 : 0,
       }}
       animate={getOuterLayout()}
       transition={{ type: "spring", stiffness: 220, damping: 24, mass: 0.9 }}
@@ -126,7 +160,19 @@ export default function Cursor() {
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white"
         animate={getInnerLayout()}
         transition={{ type: "spring", stiffness: 220, damping: 24, mass: 0.9 }}
-      />
+      >
+        {hoverType === "label" && label && (
+          <motion.span
+            key={label}
+            className="kks-cursor-label"
+            initial={{ opacity: 0, scale: 0.6 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {label}
+          </motion.span>
+        )}
+      </motion.div>
     </motion.div>
   );
 }

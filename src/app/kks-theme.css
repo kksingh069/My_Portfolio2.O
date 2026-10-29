@@ -1,0 +1,103 @@
+/* ═══════════════════════════════════════
+   KKS brand tokens + shared graphic details
+   (kept out of globals.css so the Tailwind pipeline leaves it alone)
+   ═══════════════════════════════════════ */
+
+:root {
+  /* ink / paper / signal blue */
+  --kks-ink: #0a0a0a;
+  --kks-ink-2: #121212;
+  --kks-paper: #f2f1ec;
+  --kks-paper-2: #e8e6df;
+  --kks-blue: #2b4bff;
+  --kks-blue-soft: #7d93ff;
+  --kks-line-dark: rgba(10, 10, 10, 0.12);
+  --kks-line-light: rgba(242, 241, 236, 0.12);
+  --kks-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Section eyebrow used across new sections: "(03) — Capabilities" */
+.kks-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+.kks-eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: var(--kks-blue);
+  display: inline-block;
+}
+
+/* Registration / crop marks — small graphic-design corner detail */
+.kks-crop {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+  z-index: 3;
+}
+.kks-crop::before,
+.kks-crop::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+  opacity: 0.45;
+}
+.kks-crop::before { left: 0; top: 50%; width: 100%; height: 1px; }
+.kks-crop::after  { top: 0; left: 50%; width: 1px; height: 100%; }
+.kks-crop--tl { top: 1.5rem; left: 1.5rem; }
+.kks-crop--tr { top: 1.5rem; right: 1.5rem; }
+.kks-crop--bl { bottom: 1.5rem; left: 1.5rem; }
+.kks-crop--br { bottom: 1.5rem; right: 1.5rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+
+/* ═══ Header adapts to the section underneath ═══
+   data-theme="dark"  → over dark sections: paper/white UI (default look)
+   data-theme="light" → over light sections: ink UI                        */
+.kks-header .kks-hdr-logo,
+.kks-header .kks-hdr-talk,
+.kks-header .kks-hdr-talk *,
+.kks-header .kks-hdr-menu,
+.kks-header .kks-hdr-menu span,
+.kks-header .kks-header-dot {
+  transition: color 0.45s var(--kks-ease-out), background-color 0.45s var(--kks-ease-out),
+    border-color 0.45s var(--kks-ease-out), box-shadow 0.45s var(--kks-ease-out), text-shadow 0.45s;
+}
+
+.kks-header[data-theme="light"] .kks-hdr-logo {
+  color: var(--kks-ink);
+  text-shadow: none !important;
+}
+.kks-header[data-theme="light"] .kks-hdr-talk {
+  background-color: var(--kks-ink);
+}
+.kks-header[data-theme="light"] .kks-hdr-talk span,
+.kks-header[data-theme="light"] .kks-hdr-talk svg {
+  color: var(--kks-paper);
+}
+.kks-header[data-theme="light"] .kks-hdr-menu {
+  border-color: rgba(10, 10, 10, 0.16);
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 6px 20px rgba(10, 10, 10, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+.kks-header[data-theme="light"] .kks-hdr-menu span { color: var(--kks-ink); }
+.kks-header[data-theme="light"] .kks-header-dot { background-color: var(--kks-ink); }
+
+/* Over dark sections, give the white UI a hairline so it never melts away */
+.kks-header[data-theme="dark"] .kks-hdr-menu {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.22) !important;
+}

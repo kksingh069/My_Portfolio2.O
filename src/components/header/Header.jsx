@@ -1,8 +1,12 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { gsap } from "gsap";
 import { motion, AnimatePresence } from "framer-motion";
 import { PaperPlaneTilt } from "@phosphor-icons/react";
 import { useMenu } from "@/components/menu/MenuContext";
+import Magnetic from "@/components/fx/Magnetic";
+import { scrollToTarget } from "@/lib/scrollTo";
 
 const dotVariants = {
   // no opacity here — CSS sets the default 0.55 via .kks-header-dot
@@ -16,18 +20,46 @@ const dotVariants = {
 
 export default function Header() {
   const { isMenuOpen, toggleMenu } = useMenu();
+  const [theme, setTheme] = useState("light");
+
+  // Look at what's under the header (every few frames) and flip to ink on
+  // light sections / paper on dark ones. Sections declare data-header="light|dark".
+  useEffect(() => {
+    let frame = 0;
+    const probe = () => {
+      if (++frame % 5) return;
+      const y = 44;
+      const pick = (x) => {
+        const stack = document.elementsFromPoint(x, y);
+        for (const el of stack) {
+          if (el.closest("header")) continue;
+          const tagged = el.closest("[data-header]");
+          if (tagged) return tagged.getAttribute("data-header");
+        }
+        return null;
+      };
+      const t = pick(window.innerWidth - 120) || pick(60) || "dark";
+      setTheme((prev) => (prev === t ? prev : t));
+    };
+    gsap.ticker.add(probe);
+    return () => gsap.ticker.remove(probe);
+  }, []);
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-8 py-8 md:px-16">
+    <header
+      className="kks-header fixed top-0 left-0 w-full z-50 flex items-center justify-between px-8 py-8 md:px-16"
+      data-theme={isMenuOpen ? "light" : theme}
+    >
 
       {/* Left: KKS brand */}
       <motion.div
-        className="cursor-pointer text-white font-heading tracking-[0.15em] text-2xl"
+        className="kks-hdr-logo cursor-pointer text-white font-heading tracking-[0.15em] text-2xl"
         style={{
           textShadow: "0 2px 10px rgba(255, 255, 255, 0.15)"
         }}
         whileHover={{ opacity: 0.75 }}
         transition={{ duration: 0.4 }}
+        onClick={() => scrollToTarget(0)}
         data-cursor-hover
       >
         KKS
@@ -42,9 +74,11 @@ export default function Header() {
             exit={{ opacity: 0, transition: { duration: 0.2 } }}
           >
             {/* Let's talk CTA — solid white pill */}
+            <Magnetic strength={0.4}>
             <motion.a
               href="#contact"
-              className="flex items-center gap-2 cursor-pointer bg-white rounded-full"
+              onClick={(e) => { e.preventDefault(); scrollToTarget("#contact"); }}
+              className="kks-hdr-talk flex items-center gap-2 cursor-pointer bg-white rounded-full"
               style={{ padding: "0.42rem 1.0rem" }}
               whileHover={{ scale: 1.03 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
@@ -58,10 +92,12 @@ export default function Header() {
               </span>
               <PaperPlaneTilt weight="fill" size={10} className="text-black opacity-70" />
             </motion.a>
+            </Magnetic>
 
             {/* Menu trigger */}
+            <Magnetic strength={0.4}>
             <motion.div
-              className="flex items-center gap-4 cursor-pointer kks-glass-button kks-glass-menu-btn"
+              className="kks-hdr-menu flex items-center gap-4 cursor-pointer kks-glass-button kks-glass-menu-btn"
               onClick={toggleMenu}
               data-cursor-hover
             >
@@ -87,6 +123,7 @@ export default function Header() {
                 ))}
               </motion.div>
             </motion.div>
+            </Magnetic>
           </motion.div>
         )}
       </AnimatePresence>

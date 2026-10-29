@@ -12,6 +12,9 @@ import {
   Urbanist,
   Playfair_Display,
   Space_Mono,
+  Inter_Tight,
+  JetBrains_Mono,
+  Instrument_Serif,
 } from 'next/font/google';
 
 export const publicSans = Public_Sans({ subsets: ['latin'], variable: '--font-public-sans' });
@@ -27,3 +30,8 @@ export const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 export const urbanist = Urbanist({ subsets: ['latin'], variable: '--font-urbanist' });
 export const playfairDisplay = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair-display' });
 export const spaceMono = Space_Mono({ weight: ['400', '700'], subsets: ['latin'], variable: '--font-space-mono' });
+
+/* Preloader typography — tight grotesk display, precise mono, refined serif accent */
+export const interTight = Inter_Tight({ weight: ['500', '700', '800'], subsets: ['latin'], variable: '--font-inter-tight', display: 'swap' });
+export const jetbrainsMono = JetBrains_Mono({ weight: ['400', '500'], subsets: ['latin'], variable: '--font-jetbrains-mono', display: 'swap' });
+export const instrumentSerif = Instrument_Serif({ weight: ['400'], style: ['normal', 'italic'], subsets: ['latin'], variable: '--font-instrument-serif', display: 'swap' });

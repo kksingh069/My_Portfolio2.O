@@ -41,23 +41,29 @@ export default function StoryReveal() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="kks-story-section">
+    <section ref={sectionRef} className="kks-story-section" data-no-fade data-header="light">
       <div className="kks-story-container">
-        
-        {/* Decorative Text */}
-        <div className="kks-story-label-top">EST. 1990</div>
-        <div className="kks-story-label-bottom">MELBOURNE</div>
-        
-        <div className="kks-story-title-left">Bespoke</div>
-        <div className="kks-story-title-right">Luxury</div>
 
-        {/* The Image that will expand */}
-        <div className="kks-story-image-wrapper">
-          <img 
-            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop" 
-            alt="Bespoke Luxury Interior" 
-            className="kks-story-image"
-          />
+        {/* Decorative Text */}
+        <div className="kks-story-label-top">Est. 2023 — Craft Index</div>
+        <div className="kks-story-label-bottom">Keep scrolling</div>
+
+        <div className="kks-story-title-left">Designed</div>
+        <div className="kks-story-title-right"><em>&amp;</em> Engineered</div>
+
+        {/* The panel that expands to full-screen */}
+        <div className="kks-story-image-wrapper" data-header="dark">
+          <div className="kks-story-image kks-story-art" aria-hidden="true">
+            <span className="kks-story-blob kks-story-blob--a" />
+            <span className="kks-story-blob kks-story-blob--b" />
+            <span className="kks-story-blob kks-story-blob--c" />
+            <div className="kks-story-grid" />
+            <div className="kks-story-statement">
+              <span className="kks-story-mono">// where taste meets code</span>
+              <span className="kks-story-big">Craft <em>×</em> Code</span>
+              <span className="kks-story-mono kks-story-mono--right">60fps · a11y · pixel-true</span>
+            </div>
+          </div>
         </div>
 
       </div>

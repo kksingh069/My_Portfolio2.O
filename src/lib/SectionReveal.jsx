@@ -17,7 +17,8 @@ export default function SectionReveal() {
 
         // ── Fade-away: section fades out as its bottom leaves the viewport ──
         // Only apply standard fade if it doesn't have the custom parallax exit
-        if (!el.hasAttribute("data-parallax-exit")) {
+        // Sections marked data-no-fade (pinned / full-bleed bands) keep full opacity
+        if (!el.hasAttribute("data-parallax-exit") && !el.hasAttribute("data-no-fade")) {
           gsap.to(el, {
             autoAlpha: 0,
             ease: "power1.in",

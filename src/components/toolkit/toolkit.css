@@ -1,0 +1,68 @@
+/* ═══════════════════════════════════════
+   KKS Toolkit — velocity marquee band
+   ═══════════════════════════════════════ */
+
+.kks-tk-section {
+  position: relative;
+  width: 100%;
+  background: var(--kks-blue);
+  color: #fff;
+  padding: 3rem 0 3.5rem;
+  overflow: hidden;
+}
+
+.kks-tk-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 3rem 2rem;
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.kks-tk-label .kks-eyebrow { color: rgba(255, 255, 255, 0.85); }
+.kks-tk-label .kks-eyebrow::before { background: #fff; }
+.kks-tk-label-right { color: rgba(255, 255, 255, 0.6); }
+
+.kks-tk-row {
+  overflow: hidden;
+  white-space: nowrap;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+.kks-tk-row:last-child { border-bottom: 1px solid rgba(255, 255, 255, 0.25); }
+
+.kks-tk-inner {
+  display: inline-flex;
+  will-change: transform;
+}
+
+.kks-tk-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 2.4rem;
+  padding: 0.6rem 1.2rem 0.6rem 1.2rem;
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.6rem, 7vw, 7rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+.kks-tk-row.is-outline .kks-tk-item {
+  color: transparent;
+  -webkit-text-stroke: 1.5px #fff;
+}
+
+.kks-tk-star {
+  width: 0.4em;
+  height: 0.4em;
+  color: var(--kks-ink);
+  animation: kks-spin 6s linear infinite;
+}
+.kks-tk-row.is-outline .kks-tk-star { color: #fff; }
+@keyframes kks-spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 600px) {
+  .kks-tk-label { padding: 0 1.5rem 1.5rem; }
+  .kks-tk-label-right { display: none; }
+}

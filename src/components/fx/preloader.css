@@ -1,0 +1,206 @@
+/* ═══════════════════════════════════════
+   KKS Preloader — "the split"
+   Fonts: Inter Tight (display) · JetBrains Mono (data) · Instrument Serif (accent)
+   ═══════════════════════════════════════ */
+
+.kpl {
+  --p: 0;                                   /* 0 → 1, written by JS every frame */
+  --kpl-ink: #0a0a0a;
+  --kpl-paper: #f2f1ec;
+  --kpl-dim: rgba(242, 241, 236, 0.45);
+  --kpl-accent: #7d93ff;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  color: var(--kpl-paper);
+  pointer-events: all;
+  cursor: progress;
+}
+
+/* Repeat visit / reduced motion: hidden before first paint by the <head> script */
+html.kks-seen .kpl { display: none; }
+
+/* ── Doors ─────────────────────────────── */
+.kpl-door {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  overflow: hidden;
+  background: var(--kpl-ink);
+  will-change: transform;
+}
+.kpl-door--l { left: 0; }
+.kpl-door--r { right: 0; }
+
+/* 12-col construction grid, continuous across both doors */
+.kpl-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(90deg, rgba(242, 241, 236, 0.045) 1px, transparent 1px);
+  background-size: calc(100vw / 12) 100%;
+  pointer-events: none;
+}
+.kpl-door--r .kpl-grid { background-position: calc(-50vw) 0; }
+
+/* Each stage is a full-viewport-wide box, so the word sits dead-centre on the split */
+.kpl-stage {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100vw;
+  display: grid;
+  place-items: center;
+}
+.kpl-stage--l { left: 0; }
+.kpl-stage--r { left: -50vw; }
+.kpl-stage > * { grid-area: 1 / 1; }
+
+/* ── Logotype ──────────────────────────── */
+.kpl-word {
+  font-family: var(--font-inter-tight), var(--font-inter), sans-serif;
+  font-weight: 800;
+  font-size: min(16.5vw, 34vh);
+  line-height: 0.78;
+  letter-spacing: -0.04em;
+  padding: 0 0.04em;
+  user-select: none;
+  will-change: transform, clip-path;
+  transform-origin: center;
+}
+/* Outline waiting to be filled */
+.kpl-word--ghost {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(242, 241, 236, 0.16);
+}
+/* Solid fill grows outward from the centre line as --p goes 0 → 1 */
+.kpl-word--fill { color: var(--kpl-paper); }
+.kpl-stage--l .kpl-word--fill { clip-path: inset(-10% 50% -10% calc(50% - var(--p) * 50%)); }
+.kpl-stage--r .kpl-word--fill { clip-path: inset(-10% calc(50% - var(--p) * 50%) -10% 50%); }
+
+/* ── Centre: line · dot · counter · tagline · status ── */
+.kpl-center {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.kpl-line {
+  position: absolute;
+  left: 50%;
+  top: 12vh;
+  height: 58vh;
+  width: 1px;
+  margin-left: -0.5px;
+  background: linear-gradient(to bottom, transparent, var(--kpl-paper) 18%, var(--kpl-paper));
+  transform-origin: 50% 0%;
+}
+.kpl-dot {
+  position: absolute;
+  left: 50%;
+  top: 70vh;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: var(--kpl-accent);
+  box-shadow: 0 0 0 4px rgba(125, 147, 255, 0.15), 0 0 24px rgba(125, 147, 255, 0.8);
+}
+.kpl-count {
+  position: absolute;
+  left: 50%;
+  top: calc(70vh + 1.4rem);
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.15em;
+  font-family: var(--font-jetbrains-mono), var(--font-space-mono), monospace;
+  font-weight: 500;
+  font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.kpl-count i {
+  font-style: normal;
+  font-size: 0.42em;
+  margin-top: 0.25em;
+  color: var(--kpl-dim);
+}
+.kpl-tag {
+  position: absolute;
+  left: 50%;
+  top: calc(70vh + 4.6rem);
+  transform: translateX(-50%);
+  margin: 0;
+  white-space: nowrap;
+  font-family: var(--font-inter-tight), sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  color: var(--kpl-dim);
+}
+.kpl-tag em {
+  font-family: var(--font-instrument-serif), serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.25em;
+  color: var(--kpl-paper);
+}
+.kpl-status-wrap {
+  position: absolute;
+  left: 50%;
+  bottom: 4.6rem;          /* its own row, clear of the corner labels */
+  transform: translateX(-50%);
+  height: 1.2em;
+  overflow: hidden;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--kpl-dim);
+  white-space: nowrap;
+}
+.kpl-status { display: inline-block; }
+.kpl-status::before { content: "▸ "; color: var(--kpl-accent); }
+
+/* Hairline progress along the bottom edge */
+.kpl-bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--kpl-accent), var(--kpl-paper));
+  transform-origin: left;
+  transform: scaleX(var(--p));
+}
+
+/* ── Corner meta ───────────────────────── */
+.kpl-meta { position: absolute; inset: 0; pointer-events: none; }
+.kpl-m {
+  position: absolute;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--kpl-dim);
+}
+.kpl-m b { font-weight: 500; color: var(--kpl-paper); font-variant-numeric: tabular-nums; }
+.kpl-m--tl { top: 2rem; left: 2.5rem; color: var(--kpl-paper); }
+.kpl-m--tr { top: 2rem; right: 2.5rem; }
+.kpl-m--bl { bottom: 2rem; left: 2.5rem; }
+.kpl-m--br { bottom: 2rem; right: 2.5rem; }
+
+/* ── Phones ────────────────────────────── */
+@media (max-width: 600px) {
+  .kpl-word { font-size: 17.5vw; }
+  .kpl-line { top: 18vh; height: 46vh; }
+  .kpl-dot { top: 64vh; }
+  .kpl-count { top: calc(64vh + 1.2rem); }
+  .kpl-tag { top: calc(64vh + 4.2rem); font-size: 0.85rem; }
+  .kpl-m { font-size: 0.55rem; letter-spacing: 0.12em; }
+  .kpl-m--tl { top: 1.4rem; left: 1.25rem; }
+  .kpl-m--tr { top: 1.4rem; right: 1.25rem; }
+  .kpl-m--bl { bottom: 1.4rem; left: 1.25rem; }
+  .kpl-m--br { display: none; }
+  .kpl-status-wrap { bottom: 4rem; }
+}
